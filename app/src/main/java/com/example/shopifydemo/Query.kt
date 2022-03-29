@@ -22,20 +22,21 @@ object Query {
 
     fun getAllProducts(
 
-        cursor: String
+        cursor: String,
+        number: Int
     ): Storefront.QueryRootQuery {
         val definition: Storefront.QueryRootQuery.ProductsArgumentsDefinition
         if (cursor == "nocursor") {
 
-                definition = Storefront.QueryRootQuery.ProductsArgumentsDefinition { args -> args.first(10).reverse(true)
+            definition = Storefront.QueryRootQuery.ProductsArgumentsDefinition { args -> args.first(number).reverse(false)
 
-                }
+            }
 
         } else {
 
-                definition = Storefront.QueryRootQuery.ProductsArgumentsDefinition { args ->
-                    args.after(cursor)
-                }
+            definition = Storefront.QueryRootQuery.ProductsArgumentsDefinition { args ->
+                args.first(number).after(cursor).reverse(false)
+            }
 
         }
         return Storefront.query { root ->
@@ -45,7 +46,6 @@ object Query {
             )
         }
     }
-
     fun productDefinition(): Storefront.ProductConnectionQueryDefinition {
         return Storefront.ProductConnectionQueryDefinition { productdata ->
             productdata

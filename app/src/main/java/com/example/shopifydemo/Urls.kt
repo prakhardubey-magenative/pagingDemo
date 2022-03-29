@@ -43,6 +43,7 @@ class Urls {
     internal val requestHeader: OkHttpClient
         get() {
             val httpClient = OkHttpClient.Builder()
+
             httpClient.addInterceptor { chain ->
                 val original = chain.request()
                 val request = original.newBuilder().build()
@@ -51,6 +52,8 @@ class Urls {
                 .connectTimeout(100, TimeUnit.SECONDS)
                 .writeTimeout(100, TimeUnit.SECONDS)
                 .readTimeout(300, TimeUnit.SECONDS)
+
+
             return httpClient.build()
         }
 
